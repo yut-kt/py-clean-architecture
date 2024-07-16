@@ -1,0 +1,28 @@
+[project]
+name = "py-clean-architecture"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "yut-kt", email = "yut.kt59@gmail.com" }
+]
+dependencies = [
+    "fastapi[all]>=0.111.1",
+    "pymysql>=1.1.1",
+    "sqlalchemy>=2.0.31",
+]
+readme = "README.md"
+requires-python = ">= 3.12"
+
+[tool.rye]
+managed = true
+virtual = true
+dev-dependencies = [
+    "ruff>=0.5.2",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+lint.select = ["ALL"]
+lint.ignore = ["D"]
+exclude = []

@@ -1,0 +1,35 @@
+networks:
+  container-link:
+    name: py-clean-architecture
+
+services:
+  app:
+    container_name: py-clean-architecture-app
+    build: .
+    ports:
+      - "8000:8000"
+    networks:
+      - container-link
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    container_name: py-clean-architecture-db
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: passwd
+      MYSQL_USER: mysql_user
+      MYSQL_PASSWORD: passwd
+      MYSQL_DATABASE: sample
+    volumes:
+      - ./docker/services/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/services/mysql/.my.cnf:/root/.my.cnf
+    ports:
+      - "53306:3306"
+    networks:
+      - container-link
+    healthcheck:
+      test: ["CMD", "mysql", "-e", "SELECT 1;"]
+      interval: 3s
+      retries: 30
